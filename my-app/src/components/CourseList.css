@@ -1,0 +1,24 @@
+.courses {
+    display: flex;
+    flex-direction: row;
+    margin: 1em;
+}
+
+.courses * {
+    margin: 0.2em;
+}
+
+.card {
+    border-width: 0.2em;
+    border-style: solid;
+    border-color: coral;
+}
+
+.card-body {
+    height: 170px;
+}
+
+.card-footer {
+    font-family: 'Open Sans', sans-serif;
+    padding: 20px;
+}

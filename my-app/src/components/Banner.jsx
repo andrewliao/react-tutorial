@@ -2,7 +2,9 @@ const Banner = (
     {title}
     ) => {
     return (
-        <h1>{title}</h1>
+        <div className="page-title" style={{margin: "1em"}}>
+            <h1>{title}</h1>
+        </div>
     );
 }
 
