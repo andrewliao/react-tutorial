@@ -1,27 +1,58 @@
+import React, { useState } from "react";
+import Course from "./Course.jsx";
+import { getCourseTerm, terms } from "../utilities/time";
 import "./CourseList.css"
 
-const Course = ({course}) => {
-  return (
-      <div className="card" style={{width: '14em', height: "16em"}}>
-          <div className="card-body">
-              <h4>{course.term} CS {course.number}</h4>
-              <p>{course.title}</p>
-              
-          </div>
-          <hr></hr>
-          <div className="card-footer">
-              <p>{course.meets}</p>
-          </div>
-      </div>
-  );
-}
+const TermSelector = ({ term, setTerm }) => (
+  <div className="btn-group">
+    {Object.values(terms).map((value) => (
+      <TermButton
+        key={value}
+        term={value}
+        setTerm={setTerm}
+        checked={value === term}
+      />
+    ))}
+  </div>
+);
 
-const CourseList = ({courses}) => {
+const TermButton = ({ term, setTerm, checked }) => (
+  <>
+    <input
+      type="radio"
+      id={term}
+      className="btn-check"
+      checked={checked}
+      autoComplete="off"
+      onChange={() => setTerm(term)}
+    />
+    <label class="btn btn-success m-1 p-2" htmlFor={term}>
+      {term}
+    </label>
+  </>
+);
+
+const CourseList = ({ courses }) => {
+    const [term, setTerm] = useState("Fall");
+    const [selected, setSelected] = useState([]);
+    const termCourses = Object.values(courses).filter(
+      (course) => term === getCourseTerm(course)
+    );
   return (
-      <div className = "courses">
-      { Object.entries(courses).map(([id, course]) => <Course key={id} course={course} />) }
-    </div>
+    <>
+      <TermSelector term={term} setTerm={setTerm} />
+      <div className="course-list">
+        {termCourses.map((course) => (
+          <Course
+            key={course.id}
+            course={course}
+            selected={selected}
+            setSelected={setSelected}
+          />
+        ))}
+      </div>
+    </>
   );
-}
-  
-  export default CourseList;
+};
+
+export default CourseList;
