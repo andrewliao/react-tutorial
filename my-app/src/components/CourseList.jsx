@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Course from "./Course.jsx";
 import { getCourseTerm, terms } from "../utilities/time";
+import Modal from "./Modal.jsx";
 
 const TermSelector = ({ term, setTerm }) => (
   <div className="btn-group">
@@ -34,9 +35,20 @@ const TermButton = ({ term, setTerm, checked }) => (
 const CourseList = ({ courses }) => {
     const [term, setTerm] = useState("Fall");
     const [selected, setSelected] = useState([]);
+    const [open, setOpen] = useState(false);
+    const openModal = () => setOpen(true);
+    const closeModal = () => setOpen(false);
+
     const termCourses = Object.values(courses).filter(
       (course) => term === getCourseTerm(course)
     );
+
+    const toggleSelected = (item) => setSelected(
+      selected.includes(item)
+      ? selected.filter(x => x !== item)
+      : [...selected, item]
+    );
+  
   return (
     <>
       <TermSelector term={term} setTerm={setTerm} />
@@ -50,6 +62,17 @@ const CourseList = ({ courses }) => {
           />
         ))}
       </div>
+
+      <button className="btn btn-outline-dark" onClick={openModal}>Course Plan</button>
+        <Modal open={open} close={closeModal}>
+          {selected.map(select => <div>
+            {select.title}
+            {select.title}
+            {select.meets}
+            <hr></hr>
+          </div>
+          )}
+        </Modal>
     </>
   );
 };
