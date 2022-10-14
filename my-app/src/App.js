@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CourseList from "./components/CourseList";
+import Modal from "./components/Modal";
 import "./App.css";
 
 const Banner = ({ title }) => <h1>{title}</h1>;

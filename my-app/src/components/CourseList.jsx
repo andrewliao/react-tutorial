@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Course from "./Course.jsx";
 import { getCourseTerm, terms } from "../utilities/time";
-import "./CourseList.css"
 
 const TermSelector = ({ term, setTerm }) => (
   <div className="btn-group">

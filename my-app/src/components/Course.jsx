@@ -27,10 +27,11 @@ const Course = ({ course, selected, setSelected }) => {
           {getCourseTerm(course)} CS {getCourseNumber(course)}
         </div>
         <div className="card-text">{course.title}</div>
+        <hr></hr>
+        <div className="card-text-2">{course.meets}</div>
       </div>
     </div>
   );
 };
 
 export default Course;
-
