@@ -1,6 +1,19 @@
 import React from "react";
 
 import { getCourseNumber, getCourseTerm, hasConflict} from "../utilities/time";
+import { Link } from 'react-router-dom'
+import { CourseEditForm } from "./CourseEditForm";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
+
+
+const CourseEditFormForUrl = ({ courses }) => {
+  const [visible, setVisible] = React.useState(false);
+  const { id } = useParams();
+  return <div>
+    <button onClick={() => setVisible(!visible)}>{visible ? 'Close Course Form' : 'Edit Course Form'}</button>
+      <div style={{display: visible ? 'block' : 'none'}}><CourseEditForm courses={courses} id={id} /> </div>
+    </div>;
+};
 
 const Course = ({ course, selected, setSelected }) => {
   const isSelected = selected.includes(course);
@@ -30,6 +43,8 @@ const Course = ({ course, selected, setSelected }) => {
         <hr></hr>
         <div className="card-text-2">{course.meets}</div>
       </div>
+
+        <CourseEditFormForUrl courses={course} />
     </div>
   );
 };

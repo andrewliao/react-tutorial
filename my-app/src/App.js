@@ -2,6 +2,15 @@ import React, { useState, useEffect } from "react";
 import CourseList from "./components/CourseList";
 import Modal from "./components/Modal";
 import "./App.css";
+import { CourseEditForm } from "./components/CourseEditForm";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
+
+
+const CourseEditFormForUrl = ({ courses }) => {
+  const { id } = useParams();
+  return <CourseEditForm courses={courses} id={id} />;
+};
+
 
 const Banner = ({ title }) => <h1>{title}</h1>;
 
@@ -57,6 +66,7 @@ const App = () => {
     <div className="container">
       <Banner title={schedule.title} />
       <CourseList courses={schedule.courses} />
+      <CourseEditFormForUrl courses={schedule.courses} />
     </div>
   );
 };
