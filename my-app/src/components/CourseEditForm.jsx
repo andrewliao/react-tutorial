@@ -1,6 +1,17 @@
 import { useFormData } from "../utilities/useFormData";
 import { useNavigate } from "react-router-dom";
 
+
+const validateUserData = (key, val) => {
+  switch (key) {
+    case 'title':
+      return /(^\w\w)/.test(val) ? '' : 'must be least two characters';
+    case 'meets':
+      return (/^[\s]*$/.test(val) || /(M|Tu|W|Th|F)+ (\d\d?)+:(\d\d)+-(\d\d?)+:(\d\d)/.test(val)) ? '' : 'must contain days and start-end, e.g., MWF 12:00-13:20';
+    default: return '';
+  }
+};
+
 const InputField = ({ name, text, state, change }) => (
   <div className="mb-3">
     <label htmlFor={name} className="form-label">
@@ -34,7 +45,7 @@ const ButtonBar = ({ message, disabled }) => {
 
 export const CourseEditForm = ({ courses, id }) => {
   const course = courses[id];
-  const [state, change] = useFormData(null, course);
+  const [state, change] = useFormData(validateUserData, course);
   const submit = (evt) => {
     evt.preventDefault();
   };
