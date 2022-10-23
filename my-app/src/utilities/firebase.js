@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase, onValue, ref, set } from "firebase/database";
+import { getDatabase, onValue, ref, update } from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -55,4 +55,21 @@ export const useData = (path, transform) => {
   }, [path, transform]);
 
   return [data, loading, error];
+};
+
+const makeResult = (error) => {
+  const timestamp = Date.now();
+  const message = error?.message || `Updated: ${new Date(timestamp).toLocaleString()}`;
+  return { timestamp, error, message };
+};
+
+export const useDbUpdate = (path) => {
+  const [result, setResult] = useState();
+  const updateData = useCallback((value) => {
+    update(ref(database, path), value)
+    .then(() => setResult(makeResult()))
+    .catch((error) => setResult(makeResult(error)))
+  }, [database, path]);
+
+  return [updateData, result];
 };
