@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Course from "./Course.jsx";
 import { getCourseTerm, terms } from "../utilities/time";
 import Modal from "./Modal.jsx";
+import SignInOut from "./SignInOut";
 
 const TermSelector = ({ term, setTerm }) => (
   <div className="btn-group">
@@ -51,16 +52,19 @@ const CourseList = ({ courses }) => {
   
   return (
     <>
-      <TermSelector term={term} setTerm={setTerm} />
-      <div className="course-list">
-        {termCourses.map((course) => (
-          <Course
-            key={course.id}
-            course={course}
-            selected={selected}
-            setSelected={setSelected}
-          />
-        ))}
+       <div className="d-flex justify-content-between">
+        <TermSelector term={term} setTerm={setTerm} />
+        <div className="course-list">
+          {termCourses.map((course) => (
+            <Course
+              key={course.id}
+              course={course}
+              selected={selected}
+              setSelected={setSelected}
+            />
+          ))}
+        </div>
+        <SignInOut />
       </div>
 
       <button className="btn btn-outline-dark" onClick={openModal}>Course Plan</button>

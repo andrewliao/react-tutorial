@@ -4,15 +4,16 @@ import { getCourseNumber, getCourseTerm, hasConflict} from "../utilities/time";
 import { Link } from 'react-router-dom'
 import { CourseEditForm } from "./CourseEditForm";
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
-
+import { useAuthState } from "../utilities/firebase"
 
 const CourseEditFormForUrl = ({ courses }) => {
   const [visible, setVisible] = React.useState(false);
   const { id } = useParams();
-  return <div>
+  return ( useAuthState() === null ? null : 
+  <div>
     <button onClick={() => setVisible(!visible)}>{visible ? 'Close Course Form' : 'Edit Course Form'}</button>
       <div style={{display: visible ? 'block' : 'none'}}><CourseEditForm courses={courses} id={id} /> </div>
-    </div>;
+    </div>);
 };
 
 const Course = ({ course, selected, setSelected }) => {
