@@ -2,7 +2,7 @@ import { useCallback, useState, useEffect } from "react";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase, onValue, ref, update } from "firebase/database";
+import { getDatabase, onValue, ref, update, set } from "firebase/database";
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -93,3 +93,7 @@ export const useAuthState = () => {
 
   return [user];
 };
+
+export const setData = (path, value) => (
+  set(ref(database, path), value)
+);
